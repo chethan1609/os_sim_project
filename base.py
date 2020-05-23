@@ -3,17 +3,16 @@ import numpy as np
 
 
 def main():
-    print("Hello")
-
     mainwindow = tk.Tk()
-    matdisplay_btn = tk.Button(master=mainwindow, text="MatDisplay", command=getinput)
+    mainwindow.title("OS Simulator")
+    mainwindow.minsize(400, 300)
+    matdisplay_btn = tk.Button(master=mainwindow, text="Banker's Algorithm", command=getinputBankers)
     matdisplay_btn.pack()
-
     mainwindow.mainloop()
 
-def getinput():
+def getinputBankers():
     input_win = tk.Tk()
-    
+    input_win.title("Banker's Algorithm Inputs")
     frame_0_0 = tk.Frame(master=input_win, borderwidth=1)
     frame_0_0.grid(row=0, column=0)
     n_proc_lbl = tk.Label(master=frame_0_0, text="Number of processes")
@@ -39,7 +38,7 @@ def getinput():
         c = int(n_res_entry.get())
 
         input_win.destroy()
-        matdisplay(r, c)
+        bankers_input_mat(r, c)
     
     frame_2_1 = tk.Frame(master=input_win, borderwidth=1)
     frame_2_1.grid(row=2, column=1)
@@ -85,20 +84,24 @@ def bankers(matrix, available, r, c):
         text = "The sequence couldn't be found"
     else:
         text = "A valid sequence is " + str(seq)
-
+    
+    print(text)
     bankers_win = tk.Tk()
-
-    res_lbl = tk.Label(master=bankers_win, text=text)
-    res_lbl.place(relx=.5, rely=.5, anchor="center")
-
+    bankers_win.title("Banker's Algorithm Output")
+    bankers_win.minsize(400, 300)
+    frame = tk.Frame(master=bankers_win)
+    res_lbl = tk.Label(master=frame, text=text)
+    # res_lbl.place(relx=.5, rely=.5, anchor="center")
+    res_lbl.pack()
     # quit_btn = tk.Button(master=bankers_win, text="Quit", command=bankers_win.destroy)
     # quit_btn.pack()
 
     bankers_win.mainloop()
 
 
-def matdisplay(r, c):
+def bankers_input_mat(r, c):
     window = tk.Tk()
+    window.title("Banker's Algorithm Input")
     entryobj = []
     free = []
 
@@ -130,12 +133,13 @@ def matdisplay(r, c):
             entryobj.append(entry)
             entry.pack()
 
-    for i in range(c):
-        frame = tk.Frame(window, borderwidth=1)
-        frame.grid(row=r+1, column=i+1)
-        lbl = tk.Label(master=frame, text="initial Free resource {}".format(i))
-        lbl.pack()
 
+    frame = tk.Frame(window, borderwidth=1)
+    frame.grid(row=r+2, column=0)
+    lbl = tk.Label(master=frame, text="Initial Available resource")
+    lbl.pack()
+
+    for i in range(c):
         frame = tk.Frame(window, borderwidth=1)
         frame.grid(row=r+2, column=i+1)
         entry = tk.Entry(master=frame)
@@ -185,4 +189,4 @@ def matdisplay(r, c):
 
 
 if __name__ == "__main__":
-    getinput()
+    main()
